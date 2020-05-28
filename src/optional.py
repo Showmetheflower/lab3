@@ -14,7 +14,7 @@ class Mulitimethod(object):
             raise TypeError("duplicate redisteration")
         self.typemap[types] = function
 
-def multimethod(num): #position parameter
+def multimethod(num): #optional parameter
     def register(function):
         name = function.__name__
         mm = registry.get(name)
