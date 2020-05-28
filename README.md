@@ -13,7 +13,9 @@
     5. It will be preferred if you design a complex real-world example. 
 
 4. Synopsis: 
-    We wrote three files that support multiple dispatch on positional, optional and named arguments.
+    We wrote three files that support multiple dispatch on positional, optional and named arguments.In the positional arguments,we make a map which is about arguments types
+	in the optional arguments, we make a map about the number of arguments,in the named arguments,we make a map about all arguments number,including named arguments,and we suppose
+	in foo(),the maximum lens of *args is 2,and the rest of the foo() arguments is named arguments.
 
 5. Contribution summary for each group member (should be checkable by git log and git blame):
     XueyingYue design the multiple dispatch library, and Chen Sihan test the library.
