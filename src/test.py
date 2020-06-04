@@ -1,45 +1,64 @@
-"""test for positional arguments"""
 import unittest
 from er import multimethod
 from er import multimethods
+from er import multimethod1
+from er import multimethod2
 
-import er
-
-
-class PositionalArgsTestCase(unittest.TestCase):
-
-    def test_add(self):
-        """test multimethod"""
+class MultimethodTestCase(unittest.TestCase):
+    def test_multimethod(self):
         class A(object):
-            @multimethod(int, int)
-            def add(a, b):
-                return 'int: a+b = {}'.format(a+b)
+            @multimethod(int,int)
+            def foo(a, b):
+                return "int, int"
 
             @multimethod(float, float)
-            def add(a, b):
-                return 'float: a+b = {}'.format(a+b)
+            def foo( a, b):
+                return "float, float"
 
             @multimethod(str, str)
-            def add(a, b):
-                return 'string: a+b = {}'.format(a+b)
-        X = A()
-        self.assertEqual(X.add(1, 2), 'int: a+b = 3')
-        self.assertEqual(X.add(1.2, 1.3), 'float: a+b = 2.5')
-        self.assertEqual(X.add('1', '2'), 'string: a+b = 12')
+            def foo(a, b):
+                return "str, str"
 
-    def test_divide(self):
-        """test multimethod"""
-        class A(object):
-            @multimethod(int, int)
-            def divide(a, b):
-                return 'int: a/b = {}'.format(int(a/b))
+        X=A()
+        self.assertEqual(X.foo(1,2),'int, int')
+        self.assertEqual(X.foo(1.2,1.3),'float, float')
+        self.assertEqual(X.foo("1","2"),"str, str")
+    def test_multimethods(self):
+        class B(object):
+            @multimethods(int)
+            def foo(a,b=10):
+                return a+b
+        Y=B()
+        self.assertEqual(Y.foo(1),11)
+    def test_multimethod1(self):
 
-            @multimethod(float, float)
-            def divide(a, b):
-                return 'float: a/b = {}'.format(a/b)
-        X = A()
-        self.assertEqual(X.divide(5, 2), 'int: a/b = 2')
-        self.assertEqual(X.divide(5.0, 2.0), 'float: a/b = 2.5')
+        @multimethod1(2)
+        def foo(a, b):
+            return a+b
+
+        @multimethod1(3)
+        def foo( a,b,c):
+            return a+b+c
+
+        @multimethod1(4)
+        def foo(a, b, c,d):
+            return a + b + c+d
+
+
+        self.assertEqual(foo(1,2),3)
+        self.assertEqual(foo(1,1,2,1),5)
+
+
+    def test_multimethod2(self):
+        @multimethod2(3)
+        def foo(a, b,d):
+            return a+b+d
+        self.assertEqual(foo(1,2,d=1),4)
+        @multimethod2(4)
+        def foo(a,b,c,d):
+            return a+b+c+d
+        self.assertEqual(foo(1,2,c=3,d=1),7)
+
 
 
 if __name__ == '__main__':
