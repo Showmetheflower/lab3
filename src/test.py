@@ -3,7 +3,8 @@ from er import multimethod
 from er import multimethods
 from er import multimethod1
 from er import multimethod2
-
+from inherit2 import *
+from mulinheritances import *
 class MultimethodTestCase(unittest.TestCase):
     def test_multimethod(self):
         class A(object):
@@ -49,6 +50,7 @@ class MultimethodTestCase(unittest.TestCase):
         self.assertEqual(foo(1,1,2,1),5)
 
 
+
     def test_multimethod2(self):
         @multimethod2(3)
         def foo(a, b,d):
@@ -58,6 +60,23 @@ class MultimethodTestCase(unittest.TestCase):
         def foo(a,b,c,d):
             return a+b+c+d
         self.assertEqual(foo(1,2,c=3,d=1),7)
+
+    def test_inherit(self):
+        self.assertEqual(cx_A(2,3),cx_B(2,3))
+
+    def test_mulinheritance(self):
+        @multimethodM(A, B)
+        def foo(a, b):
+            return 'BB'
+
+        @multimethodM(A, A)
+        def foo(a, b):
+            return 'do'
+
+        self.assertEqual(foo(A(), B()), 'BB')
+        self.assertEqual(foo(A(), A()), 'do')
+
+
 
 
 
